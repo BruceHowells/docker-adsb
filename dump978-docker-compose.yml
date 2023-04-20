@@ -1,0 +1,15 @@
+  dump978:
+    image: ghcr.io/sdr-enthusiasts/docker-dump978:latest
+    tty: true
+    container_name: dump978
+    restart: always
+    devices:
+      - /dev/bus/usb:/dev/bus/usb/
+    ports:
+      - 30978:30978
+      - 30979:30979
+      - 37981:37981
+      - 30980:80
+    environment:
+      - TZ=America/Los_Angeles
+      - DUMP978_RTLSDR_DEVICE=stx:978:0

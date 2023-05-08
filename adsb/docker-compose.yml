@@ -44,6 +44,7 @@ services:
       - READSB_RX_LOCATION_ACCURACY=2
       - READSB_STATS_RANGE=true
       - ENABLE_TIMELAPSE1090=false
+      #- READSB_EXTRA_ARGS=forward-mlat
       #
       # --------------------------------------------------
       # Sources and Aggregator connections:
@@ -121,5 +122,22 @@ services:
     ports:
       - 8754:8754
     environment:
-      - BEASTHOST=ultrafeeder
+      - BEASTHOST=10.0.0.88
       - FR24KEY=a482ad2784462ae9
+
+    # docker run --rm -it -p 30105:30105 -e SHARING_KEY=e07c373ef5be8d9a8da41a92e7740199 -e TZ="America/Los_Angeles" -e BEASTHOST=10.0.0.88 -e UAT_RECEIVER_HOST=10.0.0.88 -e LAT=44.88670038655793 -e LONG=-123.03142117287913 -e ALT=131m  -e ENABLE_MLAT=true ghcr.io/sdr-enthusiasts/docker-radarbox:latest
+  rbfeeder:
+    image: ghcr.io/sdr-enthusiasts/docker-radarbox:latest
+    tty: true
+    container_name: rbfeeder
+    restart: always
+    environment:
+      - TZ=America/Los_Angeles
+      - BEASTHOST=10.0.0.88
+      # should be a name, after we move dump978 here, too.
+      - UAT_RECEIVER_HOST=10.0.0.88
+      - LAT=44.88670038655793
+      - LONG=-123.03142117287913
+      - ALT=131m
+      - SHARING_KEY=e07c373ef5be8d9a8da41a92e7740199
+      - ENABLE_MLAT=true

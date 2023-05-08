@@ -1,0 +1,26 @@
+version: '3'
+services:
+  rtl433:
+    privileged: true
+    restart: unless-stopped
+    image: hertzg/rtl_433:latest
+    hostname: rtlsdr 
+    volumes:
+      - /dev:/dev:ro
+    command:
+      - '-d'
+      - ':433'
+      - '-Mtime:unix:usec:utc'
+      - '-Mbits'
+      - '-Mlevel'
+      - '-Mprotocol'
+      - '-Mstats:2:300'
+      - '-Fmqtt://10.0.0.138:1883,retain=1,user=mqtt,pass=mqtt'
+      - '-F'
+      - 'log'
+      - '-Y'
+      - 'minlevel=-10'
+      - '-R'
+      - '12'
+      - '-R'
+      - '50'

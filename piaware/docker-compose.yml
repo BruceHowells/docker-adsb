@@ -1,0 +1,28 @@
+version: '2.0'
+
+services:
+  piaware:
+    image: ghcr.io/sdr-enthusiasts/docker-piaware:latest
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    tty: true
+    container_name: piaware
+    restart: always
+#    ports:
+#      - 31978:30978
+#      - 31080:80
+    environment:
+      - TZ="America/Los_Angeles"
+      - RECEIVER_TYPE=relay
+      - BEASTHOST=10.0.0.88
+      - BEASTPORT=30005
+      - UAT_RECEIVER_TYPE=relay
+      - UAT_RECEIVER_HOST=10.0.0.88
+      - UAT_RECEIVER_PORT=30978
+      - FEEDER_ID=b5b9e92d-247d-48cc-8fca-b948c1cc8dda
+    tmpfs:
+      - /run:exec,size=64M
+      - /var/log
